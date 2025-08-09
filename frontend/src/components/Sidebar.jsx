@@ -51,7 +51,6 @@ function Sidebar() {
                 <span className='absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900'/>
               )}
             </div>
-            {/*User info for larger screens */}
             <div className='hidden lg:block text-left min-w-0'>
               <div className='font-medium truncate'>{user.name}</div>
               <div className='text-sm text-zinc-400'>
