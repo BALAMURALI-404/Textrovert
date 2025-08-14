@@ -7,10 +7,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+       fontFamily: {
+          bebas: ['"Bebas Neue"', 'sans-serif'],
+      },
+    },
   },
   plugins: [daisyui],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "retro"],
+    themes: ["light", "dark"],
   },
 };
