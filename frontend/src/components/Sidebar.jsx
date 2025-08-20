@@ -46,7 +46,8 @@ function Sidebar() {
           ${selectedUser?._id === user._id?"bg-base-300 ring-1 ring-base-300":""}`}>
             <div className='relative mx-auto lg:mx-0'>
               <img src={user.profilePic || "/avatar.png"} alt={user.name} 
-                   className='size-12 rounded-full object-cover' />
+                   className='size-12 rounded-full object-cover'
+                   onError={(e) => { e.target.onerror = null; e.target.src = "/avatar.png"; }} />
               {onlineUsers.includes(user._id) && (
                 <span className='absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900'/>
               )}
