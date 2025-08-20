@@ -40,8 +40,6 @@ function App() {
       </Routes>
       <Toaster/>
     </div>                                                                      
-    //2:27:18
-    //2:48:08
   )
 }
 
