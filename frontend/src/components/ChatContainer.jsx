@@ -50,6 +50,7 @@ const ChatContainer = () => {
                         : selectedUser.profilePic || "/avatar.png"
                     }
                     alt="profile pic"
+                    onError={(e) => { e.target.onerror = null; e.target.src = "/avatar.png"; }}
                   />
                 </div>
               </div>
