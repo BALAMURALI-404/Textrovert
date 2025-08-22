@@ -96,6 +96,25 @@ export const updateProfile = async (req, res) => {
     }
 }
 
+export const updateName = async (req, res) => {
+    try{
+        const{ name } = req.body;
+        const userId = req.user._id;
+        if(!name) return res.status(400).json({message: "Name is required"});
+        if(name.length < 3) return res.status(400).json({message: "Name must be at least 3 characters long"});
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {name},
+            {new: true}
+        ).select("-password");
+        res.status(200).json(updatedUser);
+    }
+    catch(error){
+        console.error("Error during name update:", error);
+        res.status(500).json({message: "Internal server error"});
+    }
+}
+
 export const checkAuth = (req, res) => {
     try{
         res.status(200).json(req.user);
