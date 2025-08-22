@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import {Camera, User, Mail} from "lucide-react";
+import {Camera, User, Mail, Pencil, Check} from "lucide-react";
 
 const ProfilePage = () => {
-  const {authUser, isUpdatingProfile, updateProfile} = useAuthStore();
+  const {authUser, isUpdatingProfile, updateProfile, isUpdatingName, updateName} = useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
+  const [nameUpdating, setNameUpdating] = useState(false);
+  const [newName, setNewName] = useState(authUser?.name || "");
   const handleImageUpload = async(e) => {
     const file = e.target.files[0];
     if(!file) return; 
@@ -19,6 +21,13 @@ const ProfilePage = () => {
       await updateProfile({profilePic: base64Image});
     }
   };
+
+  const handleNameUpdate = async() => {
+    if (newName.trim() && newName !== authUser?.name) {
+      await updateName({ name: newName });
+    }
+    setNameUpdating(false);
+  }
   return (
     <div className="pt-20">
       <div className="max-w-2xl mx-auto p-4 py-8">
@@ -54,25 +63,54 @@ const ProfilePage = () => {
               {isUpdatingProfile?"Uploading...":"Click the camera icon to update your profile"}
             </p>
           </div>
-
+          {/**Name details*/}
           <div className="space-y-6">
             <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <User className="w-4 h-4"/>
-                Full Name
+              <div className="flex justify-between items-center">
+                <div className="text-sm flex items-center gap-2">
+                  <User className="w-4 h-4"/>
+                  Full Name
+                </div>
+                {!nameUpdating && (
+                  <button onClick={() => setNameUpdating(true)}>
+                    <Pencil className="w-4 h-4"/>
+                  </button>
+                )}
+                {nameUpdating && (
+                  <button
+                    onClick={handleNameUpdate}
+                    disabled={isUpdatingName}
+                  >
+                    <Check className="w-4 h-4"/>
+                  </button>
+                )}
               </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.name}</p>
+              {!nameUpdating && (
+                <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.name}</p>
+              )}
+              {nameUpdating && (
+                <input
+                  className="px-4 py-2.5 bg-base-200 rounded-lg border w-[100%]"
+                  value={newName}
+                  onChange={e => setNewName(e.target.value)}
+                  autoFocus
+                  onKeyDown={e => {
+                    if(e.key === "Enter") handleNameUpdate();
+                    }
+                  }
+                />
+              )}
             </div>
-
+            {/*Mail details*/}
             <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
+              <div className="text-sm flex items-center gap-2">
                 <Mail className="w-4 h-4"/>
                 Email Address
               </div>
               <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
             </div>
           </div>
-
+          {/**Other details */}
           <div className="mt-6 bg-base-300 rounded-xl p-6">
             <h2 className="text-lg font-medium mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">
