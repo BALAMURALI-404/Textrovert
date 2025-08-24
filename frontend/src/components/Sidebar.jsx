@@ -20,13 +20,13 @@ function Sidebar() {
   if(isUsersLoading) return <div><SidebarSkeleton/></div>
   console.log(users);
   return (
-    <aside className='h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200'>
+    <aside className={`h-full ${selectedUser?"w-20":"w-full"} md:w-60 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200`}>
       <div className='border-b border-base-300 w-full p-5'>
         <div className='flex items-center gap-2'>
           <User className='size-6'/>
-          <span className='font-medium hidden lg:block'>Contacts</span>
+          <span className={`font-medium ${selectedUser? "hidden":"block"} md:block`}>Contacts</span>
         </div>
-        <div className='mt-3 hidden lg:flex items-center gap-2'>
+        <div className={`mt-3 ${selectedUser? "hidden":"flex"} md:flex items-center gap-2`}>
           <label className='cursor-pointer flex items-center gap-2'>
             <input 
               type="checkbox"
@@ -44,7 +44,7 @@ function Sidebar() {
           <button  key={user._id} onClick={() => setSelectedUser(user)}
           className={`w-full p-3 flex items-center gap-3 hover:bg-base-300 transition-colors
           ${selectedUser?._id === user._id?"bg-base-300 ring-1 ring-base-300":""}`}>
-            <div className='relative mx-auto lg:mx-0'>
+            <div className='relative lg:mx-0'>
               <img src={user.profilePic || "/avatar.png"} alt={user.name} 
                    className='size-12 rounded-full object-cover'
                    onError={(e) => { e.target.onerror = null; e.target.src = "/avatar.png"; }} />
@@ -52,7 +52,7 @@ function Sidebar() {
                 <span className='absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900'/>
               )}
             </div>
-            <div className='hidden lg:block text-left min-w-0'>
+            <div className={`${selectedUser? "hidden":"block"} md:block text-left min-w-0`}>
               <div className='font-medium truncate'>{user.name}</div>
               <div className='text-sm text-zinc-400'>
                 {onlineUsers.includes(user._id)?"Online":"Offline"}

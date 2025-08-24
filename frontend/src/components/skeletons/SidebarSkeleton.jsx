@@ -1,7 +1,7 @@
 import { Users } from "lucide-react";
 
 const SidebarSkeleton = () => {
-  const skeletonContacts = Array(8).fill(null);
+  const skeletonContacts = Array(7).fill(null);
 
   return (
     <aside
