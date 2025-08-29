@@ -20,7 +20,17 @@ const userSchema = new mongoose.Schema({
     },
     profilePicId: {
         type: String,
-    }
+    },
+    isVerified: { 
+        type: Boolean, 
+        default: false 
+    }, 
+    verificationToken: { 
+        type: String
+    }, 
+    verificationTokenExpiry: { 
+        type: Date 
+    },
 },
 {timestamps: true}
 );

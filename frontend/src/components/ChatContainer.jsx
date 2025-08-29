@@ -26,7 +26,7 @@ const ChatContainer = () => {
   },[messages]);
 
   return (
-    <div className="flex flex-col flex-1 "> 
+    <div className="w-full max-w-4xl flex flex-col"> 
       <div className="shrink-0">
         <ChatHeader />
       </div>

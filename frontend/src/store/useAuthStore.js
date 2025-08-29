@@ -13,6 +13,7 @@ export const useAuthStore = create((set, get) => ({
     isCheckingAuth: true,
     onlineUsers: [],
     socket: null,
+    baseurl: BASE_URL,
 
     checkAuth: async () => {
         try {
@@ -33,9 +34,7 @@ export const useAuthStore = create((set, get) => ({
         set({isSigningUp: true})
         try{
             const res = await axiosInstance.post("/auth/signup",data);
-            set({authUser:res.data});
-            toast.success("Account created successfully");
-            get().connectSocket();
+            toast.success("Verify your email to continue");
         }   
         catch(error){
             toast.error(error.response.data.message);
