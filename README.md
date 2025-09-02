@@ -78,6 +78,7 @@ CLOUDINARY_API_SECRET =
 EMAIL_USER =
 EMAIL_PASS =
 CLIENT_URL = <Frontend link>
+NODE_ENV = development // Only for local testing. Don't use in deployment.
 ```
 
 
