@@ -35,6 +35,8 @@ export const useAuthStore = create((set, get) => ({
         try{
             const res = await axiosInstance.post("/auth/signup",data);
             toast.success("Verify your email to continue");
+            window.location.href = "/login";
+            
         }   
         catch(error){
             toast.error(error.response.data.message);

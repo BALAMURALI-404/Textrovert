@@ -10,6 +10,7 @@ export default {
     extend: {
        fontFamily: {
           bebas: ['"Bebas Neue"', 'sans-serif'],
+          asimovian: ['"Asimovian"', 'sans-serif'],
       },
     },
   },

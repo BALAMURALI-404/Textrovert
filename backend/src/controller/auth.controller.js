@@ -4,6 +4,7 @@ import {generateToken} from "../lib/utils.js";
 import cloudinary from "../lib/cloudinary.js";
 import crypto, { Verify } from "crypto";
 import { sendEmail } from "../lib/mailer.js";
+import { verificationEmailTemplate } from "../templates/verificationEmail.js";
 
 
 export const signup = async (req,res) => {
@@ -34,10 +35,7 @@ export const signup = async (req,res) => {
         await sendEmail(
             newUser.email,
             "Verify your Textrovert account",
-            `<h2>Welcome, ${newUser.name} 👋</h2>
-             <p>Please verify your account by clicking the link below:</p>
-             <a href="${verificationLink}" target="_blank">${"Click Here To Verify"}</a>
-             <p>This link expires in 1 hour.</p>`
+            verificationEmailTemplate(newUser.name, verificationLink)
         );
 
         res.status(201).json({message: "Signup successful! Please check your email to verify your account."});
