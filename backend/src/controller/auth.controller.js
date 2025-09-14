@@ -117,49 +117,6 @@ export const logout = (req,res) => {
     }
 }
 
-export const updateProfile = async (req, res) => {
-    try {
-        const { profilePic } = req.body;
-        const userId = req.user._id;
-
-        if (!profilePic) return res.status(400).json({ message: "Profile picture is required" });
-
-        if(req.user.profilePicId) await cloudinary.uploader.destroy(req.user.profilePicId);
-
-        const uploadResponse = await cloudinary.uploader.upload(profilePic);
-
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { profilePic: uploadResponse.secure_url, profilePicId: uploadResponse.public_id },
-            { new: true }
-        );
-
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        console.error("Error during profile update:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
-
-export const updateName = async (req, res) => {
-    try{
-        const{ name } = req.body;
-        const userId = req.user._id;
-        if(!name) return res.status(400).json({message: "Name is required"});
-        if(name.length < 3) return res.status(400).json({message: "Name must be at least 3 characters long"});
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            {name},
-            {new: true}
-        ).select("-password");
-        res.status(200).json(updatedUser);
-    }
-    catch(error){
-        console.error("Error during name update:", error);
-        res.status(500).json({message: "Internal server error"});
-    }
-}
-
 export const checkAuth = (req, res) => {
     try{
         res.status(200).json(req.user);

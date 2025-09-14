@@ -78,7 +78,7 @@ export const useAuthStore = create((set, get) => ({
     updateProfile: async (data) => {
         set({isUpdatingProfile : true});
         try{
-            const res = await axiosInstance.put("/auth/update-profile",data);
+            const res = await axiosInstance.put("/users/update-profile",data);
             set({authUser:res.data});
             toast.success("Profile updated successfully");
         }
@@ -94,7 +94,7 @@ export const useAuthStore = create((set, get) => ({
     updateName: async (date) => {
         set({isUpdatingName : true});
         try{
-            const res = await axiosInstance.put("/auth/update-name",date);
+            const res = await axiosInstance.put("/users/update-name",date);
             set({authUser:res.data});
             toast.success("Name updated successfully");
         }
