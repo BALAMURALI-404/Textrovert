@@ -50,7 +50,7 @@ export const useAuthStore = create((set, get) => ({
             
         }   
         catch(error){
-            toast.error(error.response.data.message);
+            toast.error(error.data.message);
         } 
         finally {
             set({isSigningUp: false})
