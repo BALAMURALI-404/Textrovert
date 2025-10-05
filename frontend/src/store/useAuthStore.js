@@ -51,7 +51,8 @@ export const useAuthStore = create((set, get) => ({
             
         }   
         catch(error){
-            toast.error(error.response.data.message);
+            console.log("Error during signup:", error);
+            toast.error(error.response?error.response.data.message:"Something went wrong");
         } 
         finally {
             set({isSigningUp: false})
