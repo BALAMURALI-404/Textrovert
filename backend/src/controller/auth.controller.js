@@ -1,10 +1,7 @@
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import {generateToken} from "../lib/utils.js";
-import cloudinary from "../lib/cloudinary.js";
-import crypto, { Verify } from "crypto";
-import { sendEmail } from "../lib/mailer.js";
-import { verificationEmailTemplate } from "../templates/verificationEmail.js";
+import crypto from "crypto";
 
 
 export const signup = async (req,res) => {
@@ -32,13 +29,12 @@ export const signup = async (req,res) => {
         await newUser.save();
 
         const verificationLink = `${process.env.CLIENT_URL}/verify/${verificationToken}`;
-        await sendEmail(
-            newUser.email,
-            "Verify your Textrovert account",
-            verificationEmailTemplate(newUser.name, verificationLink)
-        );
-
-        res.status(201).json({message: "Signup successful! Please check your email to verify your account."});
+        res.status(201).json({
+            message: "Signup successful! Please check your email to verify your account.",
+            email,
+            name,
+            verificationLink
+        });
     }
     catch(error){
         console.error("Error during signup:", error);

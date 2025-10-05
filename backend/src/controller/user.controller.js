@@ -60,4 +60,4 @@ export const searchUsers = async (req, res) => {
     console.error("Error searching users:", error);
     res.status(500).json({ message: "Server error" });
   }
-};
+}

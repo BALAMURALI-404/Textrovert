@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
+import emailjs from 'emailjs-com';
 const BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:5000" : "https://textrovert-0xaq.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
@@ -34,6 +35,16 @@ export const useAuthStore = create((set, get) => ({
         set({isSigningUp: true})
         try{
             const res = await axiosInstance.post("/auth/signup",data);
+            await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                {
+                    email: res.data.email,
+                    name: res.data.name,
+                    verificationLink: res.data.verificationLink,
+                },
+                import.meta.env.VITE_EMAILJS_USER_ID
+            );
             toast.success("Verify your email to continue");
             window.location.href = "/login";
             
