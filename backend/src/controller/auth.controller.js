@@ -27,8 +27,9 @@ export const signup = async (req,res) => {
         })
         if(!newUser) return res.status(400).json({message: "Invalid user data"});
         await newUser.save();
-
+        console.log("New user created:", newUser);
         const verificationLink = `${process.env.CLIENT_URL}/verify/${verificationToken}`;
+        console.log("Verification link:", verificationLink);
         res.status(201).json({
             message: "Signup successful! Please check your email to verify your account.",
             email,
